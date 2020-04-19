@@ -17,26 +17,25 @@ int main(int argc, char *argv[]) {
     //set the marker back to the begining of the file
     fseek(input, 0L, SEEK_SET);
 
-    Segs_T memory = Segs_new();
-    uint32_t address = Segs_map(memory, number_instructions);
+    Segment_T segments = Segment_new();
+    uint32_t address = Segment_map(memory, number_instructions);
 
     for (int i = 0; i < size / 4; i++) {
         uint64_t instruction = 0;
+
         for (int j = 3; j >= 0; j--) {
             uint64_t byte = getc(input);
             instruction = Bitpack_newu(instruction, 8, (j * 8), byte);
         }
     
-        Segs_store(memory, (uint32_t)instruction, address, i);
+        Segment_set(memory, (uint32_t)instruction, address, i);
     }
 
+    //Reginald Aka Register (DO NOT REMOVE)
+    uint32_t reginald[8]; 
 
-
-
-
+    run_program(segments, reginald);
     
-        
-    //we must free memory
     fclose(input);
-
+    Segment_free(segments)
 }
