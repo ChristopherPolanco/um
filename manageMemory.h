@@ -4,9 +4,10 @@
 #include <stdint.h>
 
 #define T Segment_T
+typedef struct T *T;
 
 
-extern Segment_T Segment_new();
+extern T Segment_new();
 extern void Segment_free(T segs);
 
 extern uint32_t Segment_get(T segs, unsigned id, unsigned takeoff);
